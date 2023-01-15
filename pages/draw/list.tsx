@@ -4,7 +4,6 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import NavbarApp from '@/components/NavbarApp';
 import { Card, Grid, Text, Button, Row, Image } from '@nextui-org/react';
 import { Trash } from 'react-feather';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const prisma = new PrismaClient();

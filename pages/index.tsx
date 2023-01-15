@@ -1,9 +1,8 @@
 import Head from 'next/head';
 import NavbarApp from '@/components/NavbarApp';
-import { getProviders } from 'next-auth/react';
 import { Loading } from '@nextui-org/react';
 
-export default function Home({ providers }: any) {
+export default function Home() {
   return (
     <>
       <Head>
@@ -12,20 +11,10 @@ export default function Home({ providers }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavbarApp providers={providers} />
+      <NavbarApp />
       <main>
         <Loading color="primary">This is the index, WIP</Loading>
       </main>
     </>
   );
-}
-
-export async function getServerSideProps(context: any) {
-  const providers = await getProviders();
-
-  return {
-    props: {
-      providers
-    }
-  };
 }
