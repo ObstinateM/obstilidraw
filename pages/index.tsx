@@ -1,14 +1,9 @@
 import Head from 'next/head';
-import Draw from '@/components/Draw';
 import NavbarApp from '@/components/NavbarApp';
 import { getProviders } from 'next-auth/react';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from './api/auth/[...nextauth]';
-import { PrismaClient } from '@prisma/client';
+import { Loading } from '@nextui-org/react';
 
-const prisma = new PrismaClient();
-
-export default function Home({ providers, data }: any) {
+export default function Home({ providers }: any) {
   return (
     <>
       <Head>
@@ -19,7 +14,7 @@ export default function Home({ providers, data }: any) {
       </Head>
       <NavbarApp providers={providers} />
       <main>
-        <Draw initialData={data} />
+        <Loading color="primary">This is the index, WIP</Loading>
       </main>
     </>
   );
@@ -27,45 +22,10 @@ export default function Home({ providers, data }: any) {
 
 export async function getServerSideProps(context: any) {
   const providers = await getProviders();
-  const session = await unstable_getServerSession(context.req, context.res, authOptions);
-  let data;
-
-  if (!session) {
-    return {
-      props: {
-        providers,
-        data: null
-      }
-    };
-  }
-
-  data = await prisma.draw.findFirst({
-    where: {
-      author: {
-        has: session?.user?.email
-      }
-    }
-  });
-
-  if (!data) {
-    return {
-      props: {
-        providers,
-        data: null
-      }
-    };
-  }
-
-  data = {
-    elements: JSON.parse(data!.element),
-    appState: JSON.parse(data!.state),
-    files: JSON.parse(data!.file)
-  };
 
   return {
     props: {
-      providers,
-      data
+      providers
     }
   };
 }

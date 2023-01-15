@@ -14,9 +14,5 @@ export default function NavbarApp({ providers }: any) {
     );
   }
 
-  return (
-    <>
-      <SignInButton providers={providers} />
-    </>
-  );
+  return <>{providers && <SignInButton providers={providers} />}</>;
 }

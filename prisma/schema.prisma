@@ -12,8 +12,10 @@ datasource db {
 
 model Draw {
   id        Int      @id @default(autoincrement())
+  title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  blob      String
   element   String
   state     String
   file      String
