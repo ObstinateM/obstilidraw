@@ -7,3 +7,4 @@ TODO:
 - Login page
 - List page
 - Edit page
+- Add babel plugin

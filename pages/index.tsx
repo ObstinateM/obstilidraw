@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import NavbarApp from '@/components/NavbarApp';
+import NavbarApp from '@/components/NavbarHome';
 import { Loading } from '@nextui-org/react';
 
 export default function Home() {

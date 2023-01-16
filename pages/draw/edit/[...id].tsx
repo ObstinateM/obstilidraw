@@ -1,14 +1,16 @@
 import Head from 'next/head';
 import Draw from '@/components/Draw';
-import NavbarApp from '@/components/NavbarApp';
-import { getProviders } from 'next-auth/react';
+import NavbarDraw from '@/components/NavbarDraw';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { PrismaClient } from '@prisma/client';
+import { createRef } from 'react';
 
 const prisma = new PrismaClient();
 
-export default function Edit({ providers, data }: any) {
+export default function Edit({ data, id }: any) {
+  const titleRef = createRef<HTMLInputElement>();
+
   return (
     <>
       <Head>
@@ -17,9 +19,9 @@ export default function Edit({ providers, data }: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavbarApp providers={providers} />
+      <NavbarDraw title={data.title} placeholder="Title" myRef={titleRef} />
       <main>
-        <Draw initialData={data} />
+        <Draw initialData={data} id={id} titleRef={titleRef} />
       </main>
     </>
   );
@@ -27,14 +29,12 @@ export default function Edit({ providers, data }: any) {
 
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
-  const providers = await getProviders();
   const session = await unstable_getServerSession(context.req, context.res, authOptions);
   let data;
 
   if (!session) {
     return {
       props: {
-        providers,
         data: null
       }
     };
@@ -52,13 +52,15 @@ export async function getServerSideProps(context: any) {
   if (!data) {
     return {
       props: {
-        providers,
         data: null
       }
     };
   }
 
+  console.log(data);
+
   data = {
+    title: data!.title,
     elements: JSON.parse(data!.element),
     appState: JSON.parse(data!.state),
     files: JSON.parse(data!.file)
@@ -66,8 +68,8 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      providers,
-      data
+      data,
+      id: Number(id[0])
     }
   };
 }

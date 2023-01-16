@@ -1,27 +1,36 @@
 import { PrismaClient } from '@prisma/client';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import NavbarApp from '@/components/NavbarApp';
-import { Card, Grid, Text, Button, Row, Image } from '@nextui-org/react';
+import NavbarList from '@/components/NavbarList';
+import { Card, Grid, Text, Button, Row, Image, Modal } from '@nextui-org/react';
 import { Trash } from 'react-feather';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
+import { useState } from 'react';
+import ListModal from '@/components/ListModal';
 
 const prisma = new PrismaClient();
+
+export type DrawList = {
+  id: number;
+  title: string;
+  author: string[];
+  blob: string;
+  createAt: Date;
+  updatedAt: Date;
+};
 
 export type ListProps = {
   error: boolean;
   message: string;
-  drawList: {
-    id: number;
-    title: string;
-    author: string[];
-    blob: string;
-    createAt: Date;
-    updatedAt: Date;
-  }[];
+  drawList: DrawList[];
 };
 
 export default function List({ error, message, drawList }: ListProps) {
+  drawList ||= [];
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+
   const onDelete = async (id: number) => {
     const res = await fetch('http://localhost:3000/api/draw/delete', {
       method: 'DELETE',
@@ -35,20 +44,31 @@ export default function List({ error, message, drawList }: ListProps) {
 
     switch (res.status) {
       case 200:
-        console.log('DONE');
+        toast.success('Sucessfully deleted.');
+        drawList = drawList.filter((el: DrawList) => el.id !== id);
         break;
       case 404:
-        console.log('Not found');
+        toast.error('Draw not found in the database');
         break;
       default:
-        console.log('Server error');
+        toast.error('Server Error');
         break;
     }
   };
 
+  if (error) {
+    console.log(message);
+  }
+
   return (
     <>
-      <NavbarApp />
+      <NavbarList />
+      <ListModal
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        onDelete={onDelete}
+        selectedId={selectedId}
+      />
       {drawList.map((el: any) => {
         return (
           <Grid.Container gap={2} key={el.id}>
@@ -73,7 +93,10 @@ export default function List({ error, message, drawList }: ListProps) {
                       color="error"
                       icon={<Trash width="15px" />}
                       css={{ marginLeft: '10px' }}
-                      onClick={() => onDelete(el.id)}
+                      onPress={() => {
+                        setIsVisible(true);
+                        setSelectedId(el.id);
+                      }}
                     >
                       Delete
                     </Button>

@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   await prisma.draw.update({
     where: {
-      id: 10
+      id: req.body.id
     },
     data: {
       ...req.body

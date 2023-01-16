@@ -1,17 +1,21 @@
-import { Navbar, Link, Text, Avatar, Dropdown, Button, Image } from '@nextui-org/react';
+import { Navbar, Link, Text, Avatar, Dropdown, Button, Image, Input } from '@nextui-org/react';
 import { styled } from '@nextui-org/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import style from '@/styles/navbar.module.css';
 import { Key } from 'react';
+import { PenTool } from 'react-feather';
 
-export type NavbarAppProps = {};
+export type NavbarBaseProps = {
+  children?: any;
+  leftContent?: any;
+};
 
 const Box = styled('div', {
   boxSizing: 'border-box'
 });
 
-export default function NavbarApp({}: NavbarAppProps) {
+export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
@@ -72,23 +76,13 @@ export default function NavbarApp({}: NavbarAppProps) {
             }
           }}
         >
-          {/* INSERT LOGO HERE */}
-          <Text b color="inherit" hideIn="xs">
+          <PenTool width="20" height="20" />
+          <Text b color="inherit" hideIn="xs" css={{ marginLeft: '3px' }}>
             ObstiLidraw
           </Text>
         </Navbar.Brand>
-        <Navbar.Content
-          enableCursorHighlight
-          activeColor="warning"
-          hideIn="xs"
-          variant="highlight-rounded"
-        >
-          <Navbar.Link isActive href="/">
-            Home
-          </Navbar.Link>
-          <Navbar.Link href="#">Why</Navbar.Link>
-          <Navbar.Link href="#">Pricing</Navbar.Link>
-          <Navbar.Link href="#">Contribution</Navbar.Link>
+        <Navbar.Content enableCursorHighlight activeColor="warning" hideIn="xs" variant="underline">
+          {children}
         </Navbar.Content>
         <Navbar.Content
           css={{
@@ -98,6 +92,16 @@ export default function NavbarApp({}: NavbarAppProps) {
             }
           }}
         >
+          <Navbar.Item
+            css={{
+              '@xsMax': {
+                w: '100%',
+                jc: 'center'
+              }
+            }}
+          >
+            {leftContent}
+          </Navbar.Item>
           {status === 'authenticated' && (
             <Dropdown placement="bottom-right">
               <Navbar.Item>
