@@ -2,6 +2,7 @@
 import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getToken } from 'next-auth/jwt';
+import { defaultDrawImage } from '@/config';
 
 type Data = {
   id?: number;
@@ -24,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const response = await prisma.draw.create({
     data: {
       title: 'Untitled',
-      blob: 'data:image/png;base64, null',
+      blob: defaultDrawImage,
       element: '[]',
       file: '{}',
       state: '{}',

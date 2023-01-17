@@ -8,6 +8,7 @@ import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import ListModal from '@/components/ListModal';
+import style from '@/styles/list.module.css';
 
 const prisma = new PrismaClient();
 
@@ -69,44 +70,46 @@ export default function List({ error, message, drawList }: ListProps) {
         onDelete={onDelete}
         selectedId={selectedId}
       />
-      {drawList.map((el: any) => {
-        return (
-          <Grid.Container gap={2} key={el.id}>
-            <Grid sm={12} md={5}>
-              <Card css={{ mw: '330px' }}>
-                <Card.Header>
-                  <Text b>{el.title}</Text>
-                </Card.Header>
-                <Card.Divider />
-                <Card.Body css={{ py: '$10' }}>
-                  <Image src={el.blob} alt={'Thumbnail for ' + el.title} />
-                </Card.Body>
-                <Card.Divider />
-                <Card.Footer>
-                  <Row justify="flex-end">
-                    <Link href={`/draw/edit/${el.id}`}>
-                      <Button css={{ width: '100%' }}>Edit</Button>
-                    </Link>
-                    <Button
-                      auto
-                      light
-                      color="error"
-                      icon={<Trash width="15px" />}
-                      css={{ marginLeft: '10px' }}
-                      onPress={() => {
-                        setIsVisible(true);
-                        setSelectedId(el.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </Row>
-                </Card.Footer>
-              </Card>
-            </Grid>
-          </Grid.Container>
-        );
-      })}
+      <div className={style['list-container']}>
+        {drawList.map((el: any) => {
+          return (
+            <Card css={{ mw: '330px' }}>
+              <Card.Header>
+                <Text b>{el.title}</Text>
+              </Card.Header>
+              <Card.Divider />
+              <Card.Body css={{ py: '$10' }}>
+                <Image
+                  src={el.blob}
+                  alt={'Thumbnail for ' + el.title}
+                  css={{ maxHeight: '200px' }}
+                />
+              </Card.Body>
+              <Card.Divider />
+              <Card.Footer>
+                <Row justify="flex-end">
+                  <Link href={`/draw/edit/${el.id}`}>
+                    <Button css={{ width: '100%' }}>Edit</Button>
+                  </Link>
+                  <Button
+                    auto
+                    light
+                    color="error"
+                    icon={<Trash width="15px" />}
+                    css={{ marginLeft: '10px' }}
+                    onPress={() => {
+                      setIsVisible(true);
+                      setSelectedId(el.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Row>
+              </Card.Footer>
+            </Card>
+          );
+        })}
+      </div>
     </>
   );
 }
