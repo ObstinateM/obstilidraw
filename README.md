@@ -8,3 +8,4 @@ TODO:
 - List page
 - Edit page
 - Add babel plugin
+- Diapo de dessin
