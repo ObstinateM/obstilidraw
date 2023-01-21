@@ -1,9 +1,9 @@
-import config from '@/config';
+import config, { defaultDrawImage } from '@/config';
 import { PrismaClient } from '@prisma/client';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import NavbarList from '@/components/NavbarList';
-import { Card, Grid, Text, Button, Row, Image, Modal } from '@nextui-org/react';
+import { Card, Text, Button, Row, Image } from '@nextui-org/react';
 import { Trash } from 'react-feather';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -29,7 +29,7 @@ export type ListProps = {
 };
 
 export default function List({ error, message, drawList }: ListProps) {
-  drawList ||= [];
+  const [draws, setDraws] = useState<DrawList[]>(drawList);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -47,7 +47,7 @@ export default function List({ error, message, drawList }: ListProps) {
     switch (res.status) {
       case 200:
         toast.success('Sucessfully deleted.');
-        drawList = drawList.filter((el: DrawList) => el.id !== id);
+        setDraws(d => d.filter((el: DrawList) => el.id !== id));
         break;
       case 404:
         toast.error('Draw not found in the database');
@@ -72,7 +72,7 @@ export default function List({ error, message, drawList }: ListProps) {
         selectedId={selectedId}
       />
       <div className={style['list-container']}>
-        {drawList.map((el: DrawList) => {
+        {draws.map((el: DrawList) => {
           return (
             <Card css={{ mw: '330px' }} key={el.id}>
               <Card.Header>
@@ -81,7 +81,7 @@ export default function List({ error, message, drawList }: ListProps) {
               <Card.Divider />
               <Card.Body css={{ py: '$10' }}>
                 <Image
-                  src={el.blob}
+                  src={el.blob || defaultDrawImage}
                   alt={'Thumbnail for ' + el.title}
                   css={{ maxHeight: '200px' }}
                 />

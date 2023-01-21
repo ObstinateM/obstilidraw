@@ -1,6 +1,6 @@
 import image from '@/image.json';
 
-export const defaultDrawImage = image;
+export const defaultDrawImage = image.img;
 
 export const url = 'http://localhost:3000';
 

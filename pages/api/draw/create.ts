@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const response = await prisma.draw.create({
     data: {
       title: 'Untitled',
-      blob: defaultDrawImage,
+      blob: '',
       element: '[]',
       file: '{}',
       state: '{}',

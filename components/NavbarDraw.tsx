@@ -13,7 +13,17 @@ export default function NavbarDraw({ title, placeholder, myRef }: NavbarDrawProp
   return (
     <NavbarBase leftContent={<></>}>
       <Navbar.Link href={`${config.url}/draw/list`}>My Draws</Navbar.Link>
-      <Input placeholder={placeholder} initialValue={title} ref={myRef} aria-label="Draw Title" />
+      <Input
+        color="warning"
+        animated={false}
+        placeholder={placeholder}
+        initialValue={title}
+        ref={myRef}
+        aria-label="Draw Title"
+        css={{
+          border: '2px solid var(--nextui-colors-warning)'
+        }}
+      />
     </NavbarBase>
   );
 }

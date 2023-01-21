@@ -10,11 +10,6 @@ const lightTheme = createTheme({
   theme: {}
 });
 
-const darkTheme = createTheme({
-  type: 'dark',
-  theme: {}
-});
-
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
@@ -22,12 +17,11 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         defaultTheme="system"
         attribute="class"
         value={{
-          light: lightTheme.className,
-          dark: darkTheme.className
+          light: lightTheme.className
         }}
       >
         <NextUIProvider>
-          <Toaster position="bottom-center" />
+          <Toaster position="top-left" />
           <Component {...pageProps} />
         </NextUIProvider>
       </NextThemesProvider>

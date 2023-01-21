@@ -1,6 +1,4 @@
 import Head from 'next/head';
-import NavbarApp from '@/components/NavbarHome';
-import { Loading } from '@nextui-org/react';
 
 export default function Home() {
   return (
@@ -11,9 +9,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavbarApp />
       <main>
-        <Loading color="primary">This is the index, WIP</Loading>
+        <h1>This won't stay long</h1>
       </main>
     </>
   );

@@ -26,7 +26,6 @@ export default function NavbarList() {
         </Button>
       }
     >
-      <Navbar.Link href={config.url}>Home</Navbar.Link>
       <Navbar.Link isActive href="#">
         My Draws
       </Navbar.Link>

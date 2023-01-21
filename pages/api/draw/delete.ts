@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     return res.status(404).json({ message: 'Not found' });
   }
 
-  if (prismaRes.author.includes(token.email as string)) {
+  if (prismaRes.author[0] === (token.email as string)) {
     await prisma.draw.delete({
       where: {
         id: req.body.id

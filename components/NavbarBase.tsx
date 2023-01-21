@@ -5,7 +5,8 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import style from '@/styles/navbar.module.css';
 import { Key } from 'react';
-import { PenTool } from 'react-feather';
+import { Frown, PenTool } from 'react-feather';
+import { toast } from 'react-hot-toast';
 
 export type NavbarBaseProps = {
   children?: any;
@@ -20,16 +21,6 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // To hard code
-  const collapseItems = [
-    'Home',
-    'New Draw',
-    'My Draws',
-    'My Settings',
-    'Help & Feedback',
-    'Log Out'
-  ];
-
   const onDropdown = (actionKey: Key) => {
     switch (actionKey) {
       case 'profile':
@@ -41,8 +32,14 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
         router.push(`${config.url}/draw/list`);
         break;
       case 'settings':
+        toast("There isn't settings for now", {
+          duration: 2000,
+          position: 'top-right',
+          icon: <Frown />
+        });
         break;
       case 'help_and_feedback':
+        window.open('https://github.com/ObstinateM/obstilidraw/issues/new');
         break;
       case 'logout':
         signOut();
@@ -69,7 +66,6 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
       }}
     >
       <Navbar variant="static" className={style.navbar}>
-        <Navbar.Toggle showIn="xs" />
         <Navbar.Brand
           css={{
             '@xs': {
@@ -78,7 +74,7 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
           }}
         >
           <PenTool width="20" height="20" />
-          <Text b color="inherit" hideIn="xs" css={{ marginLeft: '3px' }}>
+          <Text b color="inherit" css={{ marginLeft: '3px' }}>
             ObstiLidraw
           </Text>
         </Navbar.Brand>
@@ -146,28 +142,6 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
             </Button>
           )}
         </Navbar.Content>
-        <Navbar.Collapse>
-          {collapseItems.map((item, index) => (
-            <Navbar.CollapseItem
-              key={item}
-              activeColor="warning"
-              css={{
-                color: index === collapseItems.length - 1 ? '$error' : ''
-              }}
-              isActive={index === 2}
-            >
-              <Link
-                color="inherit"
-                css={{
-                  minWidth: '100%'
-                }}
-                href="#"
-              >
-                {item}
-              </Link>
-            </Navbar.CollapseItem>
-          ))}
-        </Navbar.Collapse>
       </Navbar>
     </Box>
   );

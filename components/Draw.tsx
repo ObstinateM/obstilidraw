@@ -5,7 +5,7 @@ import {
 } from '@excalidraw/excalidraw/types/types';
 import { Button, Input } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import { useState, useEffect, RefObject, forwardRef, ForwardedRef } from 'react';
+import { useState, useEffect, RefObject, forwardRef, ForwardedRef, useRef } from 'react';
 import { Save, Trash } from 'react-feather';
 import toast from 'react-hot-toast';
 
@@ -74,12 +74,29 @@ export default function Draw({ initialData, id, titleRef }: DrawProps) {
 
   return (
     <>
-      <div style={{ height: '93vh' }}>
+      <div
+        style={{
+          height: 'calc(100vh - var(--nextui--navbarHeight) - 1px)',
+          borderTop: '1px solid black'
+        }}
+      >
         {session && Comp && (
           <Comp
             ref={(api: ExcalidrawImperativeAPI) => setExcalidrawAPI(api)}
             initialData={initialData}
           >
+            <excalidrawModule.WelcomeScreen>
+              <excalidrawModule.WelcomeScreen.Center>
+                <excalidrawModule.WelcomeScreen.Center.Logo />
+                <excalidrawModule.WelcomeScreen.Center.Heading>
+                  Obstilidraw is Excalidraw+ but self hosted
+                </excalidrawModule.WelcomeScreen.Center.Heading>
+                <excalidrawModule.WelcomeScreen.Center.Menu>
+                  <excalidrawModule.WelcomeScreen.Center.MenuItemLoadScene />
+                  <excalidrawModule.WelcomeScreen.Center.MenuItemHelp />
+                </excalidrawModule.WelcomeScreen.Center.Menu>
+              </excalidrawModule.WelcomeScreen.Center>
+            </excalidrawModule.WelcomeScreen>
             <excalidrawModule.MainMenu>
               <excalidrawModule.MainMenu.Group title="File action">
                 <excalidrawModule.MainMenu.DefaultItems.LoadScene />
