@@ -1,12 +1,13 @@
 import { Button, Navbar } from '@nextui-org/react';
 import NavbarBase from './NavbarBase';
 import { useRouter } from 'next/router';
+import config from '@/config';
 
 export default function NavbarList() {
   const router = useRouter();
 
   const onCreate = async () => {
-    const res = await fetch('http://localhost:3000/api/draw/create', {
+    const res = await fetch(`${config.url}/api/draw/create`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -14,7 +15,7 @@ export default function NavbarList() {
     });
     const json = await res.json();
 
-    router.push(`http://localhost:3000/draw/edit/${json.id}`);
+    router.push(`${config.url}/draw/edit/${json.id}`);
   };
 
   return (
@@ -25,7 +26,7 @@ export default function NavbarList() {
         </Button>
       }
     >
-      <Navbar.Link href="http://localhost:3000/">Home</Navbar.Link>
+      <Navbar.Link href={config.url}>Home</Navbar.Link>
       <Navbar.Link isActive href="#">
         My Draws
       </Navbar.Link>

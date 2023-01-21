@@ -1,3 +1,4 @@
+import config from '@/config';
 import { Button, Navbar } from '@nextui-org/react';
 import NavbarBase from './NavbarBase';
 import { useRouter } from 'next/router';
@@ -8,7 +9,7 @@ export default function NavbarHome() {
   const { data: session, status } = useSession();
 
   const onCreate = async () => {
-    const res = await fetch('http://localhost:3000/api/draw/create', {
+    const res = await fetch(`${config.url}/api/draw/create`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -16,7 +17,7 @@ export default function NavbarHome() {
     });
     const json = await res.json();
 
-    router.push(`http://localhost:3000/draw/edit/${json.id}`);
+    router.push(`${config.url}/draw/edit/${json.id}`);
   };
 
   return (

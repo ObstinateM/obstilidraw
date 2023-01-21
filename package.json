@@ -1,12 +1,14 @@
 {
   "name": "obstilidraw",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:prod": "prisma migrate deploy"
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.14.0",

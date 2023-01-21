@@ -1,3 +1,4 @@
+import config from '@/config';
 import { Navbar, Link, Text, Avatar, Dropdown, Button, Image, Input } from '@nextui-org/react';
 import { styled } from '@nextui-org/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
@@ -37,7 +38,7 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
         onCreate();
         break;
       case 'my_draw':
-        router.push('http://localhost:3000/draw/list');
+        router.push(`${config.url}/draw/list`);
         break;
       case 'settings':
         break;
@@ -50,7 +51,7 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
   };
 
   const onCreate = async () => {
-    const res = await fetch('http://localhost:3000/api/draw/create', {
+    const res = await fetch(`${config.url}/api/draw/create`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -58,7 +59,7 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
     });
     const json = await res.json();
 
-    router.push(`http://localhost:3000/draw/edit/${json.id}`);
+    router.push(`${config.url}/draw/edit/${json.id}`);
   };
 
   return (

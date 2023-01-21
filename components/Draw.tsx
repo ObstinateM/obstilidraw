@@ -1,3 +1,4 @@
+import config from '@/config';
 import {
   ExcalidrawImperativeAPI,
   ExcalidrawInitialDataState
@@ -57,7 +58,7 @@ export default function Draw({ initialData, id, titleRef }: DrawProps) {
         file: JSON.stringify(excalidrawAPI.getFiles())
       };
 
-      await fetch('http://localhost:3000/api/draw/update', {
+      await fetch(`${config.url}/api/draw/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

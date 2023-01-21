@@ -1,3 +1,4 @@
+import config from '@/config';
 import { PrismaClient } from '@prisma/client';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
@@ -33,7 +34,7 @@ export default function List({ error, message, drawList }: ListProps) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const onDelete = async (id: number) => {
-    const res = await fetch('http://localhost:3000/api/draw/delete', {
+    const res = await fetch(`${config.url}/api/draw/delete`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -71,9 +72,9 @@ export default function List({ error, message, drawList }: ListProps) {
         selectedId={selectedId}
       />
       <div className={style['list-container']}>
-        {drawList.map((el: any) => {
+        {drawList.map((el: DrawList) => {
           return (
-            <Card css={{ mw: '330px' }}>
+            <Card css={{ mw: '330px' }} key={el.id}>
               <Card.Header>
                 <Text b>{el.title}</Text>
               </Card.Header>
