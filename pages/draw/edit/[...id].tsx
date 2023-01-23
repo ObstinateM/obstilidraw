@@ -5,11 +5,18 @@ import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import { PrismaClient } from '@prisma/client';
 import { createRef } from 'react';
+import { useSession } from 'next-auth/react';
+import { Loading } from '@nextui-org/react';
 
 const prisma = new PrismaClient();
 
 export default function Edit({ data, id }: any) {
+  const { data: session, status } = useSession();
   const titleRef = createRef<HTMLInputElement>();
+
+  if (status === 'loading') {
+    return <Loading />;
+  }
 
   return (
     <>

@@ -138,9 +138,6 @@ export default function NavbarBase({ children, leftContent }: NavbarBaseProps) {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Button color="warning" bordered size="sm" onPress={() => signIn('google')}>
-            Sign In
-          </Button>
         </Navbar.Content>
       </Navbar>
     </Box>

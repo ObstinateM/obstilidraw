@@ -1,8 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-export { default } from 'next-auth/middleware';
-
 export const middleware = (request: NextRequest) => {
   if (
     request.nextUrl.pathname.startsWith('/draw') &&

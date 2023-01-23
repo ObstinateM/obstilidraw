@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
 import NavbarList from '@/components/NavbarList';
-import { Card, Text, Button, Row, Image } from '@nextui-org/react';
+import { Card, Text, Button, Row, Image, Loading } from '@nextui-org/react';
 import { Trash } from 'react-feather';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -72,6 +72,10 @@ export default function List({ error, message, drawList }: ListProps) {
     console.log(message);
   }
 
+  if (status === 'loading') {
+    return <Loading />;
+  }
+
   return (
     <>
       <Head>
@@ -88,6 +92,14 @@ export default function List({ error, message, drawList }: ListProps) {
         selectedId={selectedId}
       />
       <div className={style['list-container']}>
+        {draws.length === 0 && (
+          <>
+            <div className={style['center']}>
+              <Text h2>You have no draw here :c</Text>
+              <Text h3>Create your first by using the button at the top right</Text>
+            </div>
+          </>
+        )}
         {draws.map((el: DrawList) => {
           return (
             <Card css={{ mw: '330px' }} key={el.id}>
