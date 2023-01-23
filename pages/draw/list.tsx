@@ -10,6 +10,9 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import ListModal from '@/components/ListModal';
 import style from '@/styles/list.module.css';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import Head from 'next/head';
 
 const prisma = new PrismaClient();
 
@@ -29,6 +32,13 @@ export type ListProps = {
 };
 
 export default function List({ error, message, drawList }: ListProps) {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  if (status === 'unauthenticated') {
+    router.push(`${config.url}/`);
+  }
+
   const [draws, setDraws] = useState<DrawList[]>(drawList);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -64,6 +74,12 @@ export default function List({ error, message, drawList }: ListProps) {
 
   return (
     <>
+      <Head>
+        <title>Obstilidraw</title>
+        <meta name="description" content="The list of all my draws" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <NavbarList />
       <ListModal
         isVisible={isVisible}
