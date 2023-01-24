@@ -45,7 +45,7 @@ export default function Home() {
           <>
             <h1>You&apos;re logged in</h1>
             <Link href="/draw/list">Visit your draws</Link>
-            <Text>This home page is early</Text>
+            <Text>This home page is temporary</Text>
           </>
         )}
       </main>
