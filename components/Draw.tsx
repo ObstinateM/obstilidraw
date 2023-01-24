@@ -115,7 +115,11 @@ export default function Draw({ initialData, id, titleRef }: DrawProps) {
                 <excalidrawModule.MainMenu.DefaultItems.ChangeCanvasBackground />
               </excalidrawModule.MainMenu.Group>
             </excalidrawModule.MainMenu>
-            <excalidrawModule.Footer></excalidrawModule.Footer>
+            <excalidrawModule.Footer>
+              <Button onPress={() => saveComponent()} color="warning" bordered>
+                Save to cloud
+              </Button>
+            </excalidrawModule.Footer>
           </Comp>
         )}
       </div>
