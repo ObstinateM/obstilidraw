@@ -31,3 +31,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   return res.status(200).json({ message: 'Done' });
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '1000mb'
+    }
+  }
+};

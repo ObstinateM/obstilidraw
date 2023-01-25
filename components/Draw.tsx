@@ -58,7 +58,7 @@ export default function Draw({ initialData, id, titleRef }: DrawProps) {
         file: JSON.stringify(excalidrawAPI.getFiles())
       };
 
-      await fetch(`${config.url}/api/draw/update`, {
+      const res = await fetch(`${config.url}/api/draw/update`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ export default function Draw({ initialData, id, titleRef }: DrawProps) {
         body: JSON.stringify(body)
       });
 
-      toast.success('Saved');
+      console.log('Prod debug', res);
     } catch (error) {
       toast.error(error as any);
     }
