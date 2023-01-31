@@ -66,6 +66,7 @@ export default function Draw({ initialData, id, titleRef }: DrawProps) {
         body: JSON.stringify(body)
       });
 
+      toast.success("Successfully saved.");
       console.log('Prod debug', res);
     } catch (error) {
       toast.error(error as any);
