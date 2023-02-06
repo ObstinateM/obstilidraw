@@ -2,7 +2,7 @@
 
 docker-compose example
 
-````yml
+```yml
 version: '3'
 services:
   obstilidraw:
@@ -33,7 +33,6 @@ services:
 
 volumes:
   obstilidraw:
-
 ```
 
 TODO:
