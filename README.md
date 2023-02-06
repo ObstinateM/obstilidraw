@@ -45,4 +45,3 @@ TODO:
 - Edit page
 - Add babel plugin
 - Diapo de dessin
-````
