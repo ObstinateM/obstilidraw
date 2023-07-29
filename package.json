@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:prod": "prisma migrate deploy && npm run start",
+    "start:prod": "npm run start",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "migrate:dev": "prisma migrate dev",
